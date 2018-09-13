@@ -16,6 +16,9 @@ document.addEventListener("DOMContentLoaded", (e) => {
       if (rightFileType && uniqueDoggo) {
         posted.push(json.url);
         datesPosted.push(`${now.getMonth()} ${now.getDate()}`);
+        // change config.POST_URL to return an array of urls,
+        // then update postDogPic to take postUrl and picUrl
+        // POST_URL.forEach( (postUrl) => {postDogPic(postUrl, json.url)} )
         postDogPic(json.url);
         console.log(`posted at ${now.getHours()}:${now.getMinutes()}`);
       } else {
