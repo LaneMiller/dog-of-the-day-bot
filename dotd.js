@@ -1,7 +1,7 @@
 
 document.addEventListener("DOMContentLoaded", (e) => {
   PIC_URL = `https://random.dog/woof.json`;
-  POST_URL = config.POST_URL;
+  POST_URLS = config.POST_URLS;
   const posted = [];
   const datesPosted = [];
 
@@ -16,10 +16,10 @@ document.addEventListener("DOMContentLoaded", (e) => {
       if (rightFileType && uniqueDoggo) {
         posted.push(json.url);
         datesPosted.push(`${now.getMonth()} ${now.getDate()}`);
-        // change config.POST_URL to return an array of urls,
+        // change config.POST_URLS to return an array of urls,
         // then update postDogPic to take postUrl and picUrl
-        // POST_URL.forEach( (postUrl) => {postDogPic(postUrl, json.url)} )
-        postDogPic(json.url);
+        POST_URLS.forEach( (postUrl) => {postDogPic(postUrl, json.url)} )
+        // postDogPic(json.url);
         console.log(`posted at ${now.getHours()}:${now.getMinutes()}`);
       } else {
         fetchDogPic();
@@ -27,8 +27,8 @@ document.addEventListener("DOMContentLoaded", (e) => {
     }).catch(error => {console.log(error); setTimeout(startApp, 60000)});
   }
 
-  postDogPic = (picUrl) => {
-    fetch(POST_URL + `${picUrl} Here's your Dog of the Day!!`);
+  postDogPic = (postUrl, picUrl) => {
+    fetch(postUrl + `${picUrl} Here's your Dog of the Day!!`);
   }
 
   startApp = () => {
