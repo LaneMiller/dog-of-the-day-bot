@@ -33,12 +33,16 @@ document.addEventListener("DOMContentLoaded", (e) => {
     const now = new Date();
     console.log(now);
     const msTillDog = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 9, 0, 0, 0) - now;
-    const oneDogPerDay = !datesPosted.includes(`${now.getMonth()} ${now.getDate()}`);
+    const noDogYet = !datesPosted.includes(`${now.getMonth()} ${now.getDate()}`);
 
-    if (msTillDog <= 0 && oneDogPerDay) {
-      fetchDogPic(now);
+    if (msTillDog > 0) {
+      setTimeout(() => {fetchDogPic(now); startApp();}, msTillDog);
+    } else if (msTillDog <= 0) {
+      if (noDogYet) {
+        fetchDogPic(now);
+      }
+      setTimeout(startApp, 3600000); //check again in 1 hour
     }
-    setTimeout(startApp, 1800000); //check again in 1/2 hour
   }
 
   startApp()
