@@ -9,13 +9,14 @@ document.addEventListener("DOMContentLoaded", (e) => {
   const datesPosted = [];
 
   fetchDogPic = (now) => {
-    fetch(PIC_URL).then(res => res.json()).then(json => {
+    return fetch(PIC_URL).then(res => res.json()).then(json => {
       const urlArr = json.url.split('.');
       const rightFileType = urlArr[urlArr.length - 1].toLowerCase() === `jpg`
       const uniqueDoggo = !posted.includes(json.url);
 
       if (rightFileType && uniqueDoggo) {
         posted.push(json.url);
+        console.log(now);
         datesPosted.push(`${now.getMonth()} ${now.getDate()}`);
         POST_URLS.forEach( (postUrl) => {postDogPic(postUrl, json.url)} )
         console.log(`posted at ${now.getHours()}:${now.getMinutes()}`);
@@ -35,12 +36,13 @@ document.addEventListener("DOMContentLoaded", (e) => {
     const msTillDog = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 9, 0, 0, 0) - now;
     const noDogYet = !datesPosted.includes(`${now.getMonth()} ${now.getDate()}`);
 
-    if (msTillDog > 0) {
-      setTimeout(() => {fetchDogPic(now); startApp();}, msTillDog);
-    } else if (msTillDog <= 0) {
-      if (noDogYet) {
-        fetchDogPic(now);
+    if (noDogYet) {
+      if (msTillDog > 0) {
+        setTimeout(() => {fetchDogPic(now).then(startApp)}, msTillDog);
+      } else if (msTillDog <= 0) {
+        fetchDogPic(now).then(startApp);
       }
+    } else {
       setTimeout(startApp, 3600000); //check again in 1 hour
     }
   }
