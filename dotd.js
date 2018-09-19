@@ -23,6 +23,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
         fetchDogPic();
       }
     }).catch(error => {console.log(error); setTimeout(startApp, 10000)});
+    console.log(`datesPosted as of ${now}`, datesPosted)
   }
 
   postDogPic = (postUrl, picUrl) => {
@@ -31,10 +32,10 @@ document.addEventListener("DOMContentLoaded", (e) => {
 
   startApp = () => {
     const now = new Date();
-    console.log(now);
+    console.log('startApp called at', now);
     const msTillDog = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 9, 0, 0, 0) - now;
     const noDogYet = !datesPosted.includes(`${now.getMonth()} ${now.getDate()}`);
-
+    console.log('Has there been a dog yet?', noDogYet);
     if (noDogYet) {
       if (msTillDog > 0) {
         setTimeout(() => {fetchDogPic(now).then(startApp)}, msTillDog);
@@ -46,5 +47,5 @@ document.addEventListener("DOMContentLoaded", (e) => {
     }
   }
 
- // startApp()
+ startApp()
 });
