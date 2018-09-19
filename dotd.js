@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
   }
 
   postDogPic = (postUrl, picUrl) => {
-    fetch(postUrl + `Here's your Dog of the Day!!   ${picUrl}`);
+    fetch(postUrl + `Here's your Dog of the Day!!    ${picUrl}    Am I misbehaving? Reach out to <@U9H9T6KLG> with any error reports! `);
   }
 
   startApp = () => {
@@ -46,5 +46,5 @@ document.addEventListener("DOMContentLoaded", (e) => {
     }
   }
 
-  startApp()
+ // startApp()
 });
