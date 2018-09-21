@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
   const posted = [];
   const datesPosted = [];
 
-  fetchDogPic = (now) => {
+  fetchDogPic = (now, date) => {
     return fetch(PIC_URL).then(res => res.json()).then(json => {
       const urlArr = json.url.split('.');
       const rightFileType = urlArr[urlArr.length - 1].toLowerCase() === `jpg`
@@ -16,14 +16,12 @@ document.addEventListener("DOMContentLoaded", (e) => {
 
       if (rightFileType && uniqueDoggo) {
         posted.push(json.url);
-        datesPosted.push(`${now.getMonth()} ${now.getDate()}`);
         POST_URLS.forEach( (postUrl) => {postDogPic(postUrl, json.url)} )
         console.log(`posted at ${now.getHours()}:${now.getMinutes()}`);
       } else {
-        fetchDogPic();
+        fetchDogPic(now, date);
       }
     }).catch(error => {console.log(error); setTimeout(startApp, 10000)});
-    console.log(`datesPosted as of ${now}`, datesPosted)
   }
 
   postDogPic = (postUrl, picUrl) => {
@@ -33,16 +31,27 @@ document.addEventListener("DOMContentLoaded", (e) => {
   startApp = () => {
     const now = new Date();
     console.log('startApp called at', now);
+    const date = `${now.getMonth()}-${now.getDate()}-${now.getFullYear()}`
+    console.log(date);
+
     const msTillDog = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 9, 0, 0, 0) - now;
-    const noDogYet = !datesPosted.includes(`${now.getMonth()} ${now.getDate()}`);
-    console.log('Has there been a dog yet?', noDogYet);
+    const noDogYet = !datesPosted.includes(date);
+    console.log('No dog yet?', noDogYet);
+
     if (noDogYet) {
+      datesPosted.push(date);
+      console.log(`all datesPosted:`, datesPosted)
       if (msTillDog > 0) {
-        setTimeout(() => {fetchDogPic(now).then(startApp)}, msTillDog);
+        console.log('It should be before 9am');
+        setTimeout(() => {fetchDogPic(now, date)}, msTillDog);
+        setTimeout(startApp, msTillDog + 30000)
       } else if (msTillDog <= 0) {
-        fetchDogPic(now).then(startApp);
+        console.log('It should after, or exactly, 9am');
+        fetchDogPic(now, date)
+        setTimeout(startApp, 30000)
       }
     } else {
+      console.log('It should be after 9am on a day we already posted');
       setTimeout(startApp, 3600000); //check again in 1 hour
     }
   }
