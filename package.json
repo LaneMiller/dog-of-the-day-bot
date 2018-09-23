@@ -1,0 +1,23 @@
+{
+  "name": "dotd",
+  "version": "1.0.0",
+  "description": "A slack bot that posts random dog pics",
+  "main": "dotd.js",
+  "dependencies": {
+    "node-fetch": "^2.2.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LaneMiller/dog-of-the-day-bot.git"
+  },
+  "author": "LaneMiller",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/LaneMiller/dog-of-the-day-bot/issues"
+  },
+  "homepage": "https://github.com/LaneMiller/dog-of-the-day-bot#readme"
+}
