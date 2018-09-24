@@ -1,1 +1,7 @@
-
+[22:30:8]: startApp called at Sun Sep 23 2018 22:30:08 GMT-0400 (EDT)
+[22:30:8]: No dog yet? true
+[22:30:8]: datesPosted: 8-23-2018
+[22:30:8]: It should be after, or exactly, 9am
+[22:30:39]: startApp called at Sun Sep 23 2018 22:30:39 GMT-0400 (EDT)
+[22:30:39]: No dog yet? false
+[22:30:39]: It should be after 9am on a day we already posted

@@ -62,12 +62,13 @@ startApp = () => {
     setTimeout(startApp, 3600000); //check again in 1 hour
   }
 
-  fs.writeFile(`./logs/log-${date}.txt`, logLines, {flag: 'a'}, function(err) {
+  fs.writeFile(`/home/pi/dog-of-the-day-bot/logs/log-${date}.txt`, logLines, {flag: 'a'}, function(err) {
     if(err) {
+      console.log('error: ', err);
       logLines += `[${time}]: error - ${err}\n`;
     }
     console.log(`log-${date}.txt written.`);
   });
 }
 
-startApp()
+startApp();
