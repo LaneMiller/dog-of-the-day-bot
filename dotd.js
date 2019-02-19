@@ -1,6 +1,7 @@
 const fs = require('fs');
 const fetch = require('node-fetch');
-const { config } = require('./config.js')
+const { config } = require('./config.js');
+const { dogArray } = require('./dogArray.js');
 
 PIC_URL = `https://random.dog/woof.json`;
 KEY = config.API_KEY
@@ -8,7 +9,7 @@ POST_URLS = config.CHANNELS.map( channel =>
   `https://slack.com/api/chat.postMessage?token=${KEY}&channel=%23${channel}&as_user=false&icon_emoji=%3Adog%3A&unfurl_media=true&username=Good%20Boi%20bot&pretty=1&text=`
 )
 
-const posted = [];
+const posted = [...dogArray];
 const datesPosted = [];
 
 fetchDogPic = (time, logLines) => {
@@ -18,13 +19,27 @@ fetchDogPic = (time, logLines) => {
     const uniqueDoggo = !posted.includes(json.url);
 
     if (rightFileType && uniqueDoggo) {
+      // write to local and file arrays
       posted.push(json.url);
+      writeToDogArray(json.url);
+      // post pic to Slack channel(s)
       POST_URLS.forEach( (postUrl) => {postDogPic(postUrl, json.url)} )
       logLines += `[${time}]: dog posted.\n`;
     } else {
       fetchDogPic(time, logLines);
     }
   }).catch(error => {logLines += `[${time}]: error - ${error}\n`; setTimeout(startApp, 10000)});
+}
+
+writeToDogArray = (url) => {
+  const newData = `.concat('${url}')`;
+
+  fs.writeFile(`/home/pi/dog-of-the-day-bot/dogArray.js`, newData, {flag: 'a'}, function(err) {
+    if(err) {
+      console.log('dogArray update error: ', err);
+    }
+    console.log(`dogArray.js updated`);
+  });
 }
 
 postDogPic = (postUrl, picUrl) => {
