@@ -4,10 +4,10 @@ const { config } = require('./config.js');
 const { dogArray } = require('./dogArray.js');
 
 PIC_URL = `https://random.dog/woof.json`;
-KEY = config.API_KEY
+KEY = config.API_KEY;
 POST_URLS = config.CHANNELS.map( channel =>
   `https://slack.com/api/chat.postMessage?token=${KEY}&channel=%23${channel}&as_user=false&icon_emoji=%3Adog%3A&unfurl_media=true&username=Good%20Boi%20bot&pretty=1&text=`
-)
+);
 
 const posted = [...dogArray];
 const datesPosted = [];
@@ -43,7 +43,7 @@ writeToDogArray = (url) => {
 }
 
 postDogPic = (postUrl, picUrl) => {
-  fetch(postUrl + `Here's your Dog of the Day!!    ${picUrl}    Am I misbehaving? Reach out to <@U9H9T6KLG> with any error reports! `);
+  fetch(postUrl + `Here's your Dog of the Day!!    ${picUrl}`);
 }
 
 startApp = () => {

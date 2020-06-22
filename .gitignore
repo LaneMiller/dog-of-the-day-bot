@@ -23,3 +23,6 @@
 /config/master.key
 config.js
 /logs/*
+
+dogArray.js
+
